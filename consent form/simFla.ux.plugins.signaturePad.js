@@ -387,15 +387,36 @@ simFla.ux.plugins.signaturePad = Ext.extend(Ext.util.Observable, {
         c.beginPath();
    },
    redirectToImage: function() {
-    var oCanvas = document.getElementById("thecanvas");
+	var oCanvas = document.getElementById("thecanvas");
     if (!oCanvas) return;
 
     // Get the image data as a PNG
     var imgData = oCanvas.toDataURL("image/png");
 	
-  
-    // Redirect to a new page showing the image
-    window.location.href = 'conset.html?signature='+ encodeURIComponent(imgData);
+	console.log("Sending image data:", imgData); 
+    // Use fetch to send the image data to the PHP file
+    fetch('index.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ signature: imgData })
+    })
+    .then(response => response.text())
+    .then(data => {
+        // Check if the response is successful
+        if (data) {
+            console.log("Signature sent successfully!");
+			window.location.href = 'conset.php';
+        } else {
+            console.error("Failed to send signature.");
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
-});
+}
+
+);

@@ -1,0 +1,51 @@
+
+ul {
+    list-style-type: none;
+    font-size: larger;
+    padding:30px;
+    float:right;
+    background-color: antiquewhite;
+    
+}
+ul li{
+    text-decoration: none;
+    display:inline;
+    padding: 0px 90px;
+}
+ul li a{
+    text-decoration: none;
+    color: black;
+    font-weight: bolder;
+}
+ul li :hover{
+text-decoration: underline;
+color:blue;
+}
+#form-create{
+    border: 10px solid transparent;
+    padding:20px 0px 8px 0px;
+    border-radius: 10px;
+    border-style: ridge;
+    box-shadow: 8px 8px 10px gray;
+    text-align: center;
+    margin-right: 30%;
+    margin-left: 30%;
+    margin-top: 10%;
+    background-color:dodgerblue;
+}
+.content{
+    padding: 5px 80px 5px 0px;
+border-radius: 5px;
+border-color: black;
+
+}
+.error_message{
+    border: 1px solid white;
+    border-radius: 10%;
+    padding:10px;
+    text-align: left;
+    background-color: lightpink;
+    color:black;
+    margin:50px;
+
+}

@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="home.css">
+    <title>CREATE FORM</title>
+</head>
+<body>
+    <div id="nav-bar">
+        <ul>
+            <li><a href="home.php">Dashboard</a></li>
+            <li><a href="create.html">Create</a></li>
+            <li><a href="#">ConsentForms</a></li>
+            <li><a href="">Logout</a></li>
+        </ul>
+    </div>
+    <br>
+    <div id="form-create">
+        <form  method="post" action="createform.php">
+            <label>Name Of Event</label> <br>
+            <input type="text" name="eventname" class="content"> <br>
+            <label>Date</label> <br>
+            <input type="date" name="date" class="content"> <br>
+            <label>Location</label> <br>
+            <input type="text" name="location" class="content"> <br>
+            <input type="submit" name="submit" value="CREATE">
+        </form>
+    </div>
+   
+</body>
+</html>
