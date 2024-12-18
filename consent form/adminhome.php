@@ -23,9 +23,9 @@
 <body>
     <div id="nav-bar">
         <ul>
-            <li><a href="home.php">Dashboard</a></li>
-            <li><a href="create.html">Create</a></li>
-            <li><a href="forms.php">ConsentForms</a></li>
+            <li><a href="adminhome.php">Dashboard</a></li>
+            <li><a href="search.html">Search Form</a></li>
+            
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
@@ -37,23 +37,38 @@
             <td>Date</td>
             <td>Location</td>
             <td>Status</td>
+            <td>Event Creator</td>
+            
            
             
         </tr>
         <?php
 include "connectDB.php";
-session_start();
-$user=$_SESSION['user_id'];
 
 
-$idsql="SELECT event_name,date,location, status from event where creator_id='$user'";
+
+$idsql="SELECT * from event";
 $sqlresult=pg_query($connect,$idsql);
 if ($sqlresult) {
+
     while($account=pg_fetch_assoc($sqlresult)){
         $event= $account['event_name'];
         $e_date=$account['date'];
         $event_location=$account['location'];
         $status=$account['status'];
+        $creator=$account['creator_id'];
+        $sql="SELECT fullname from users WHERE user_id=$creator";
+        $result=pg_query($connect,$sql);
+        if ($result) {
+            if(pg_num_rows($result)>0){
+                $users=pg_fetch_assoc($result);
+                $creator_name=$users['fullname'];
+                
+            }
+        }
+        else {
+            die(pg_last_error());
+        }
         
         echo"
          <tr>
@@ -62,6 +77,7 @@ if ($sqlresult) {
                     <td>$e_date</td>
                     <td>$event_location</td>
                     <td>$status</td>
+                   <td>$creator_name</td>
                    
                 </tr>
         ";

@@ -4,41 +4,46 @@ include "connectDB.php";
 session_start();
 $event=$_SESSION['event_name'];
 $signatureImage=$_SESSION['signature'] ;
-
-if($_SERVER['REQUEST_METHOD']=='POST'){
-    $firstName=$_POST['fname'];
-    $lastName=$_POST['lastname'];
-    $email=$_POST['email'];
-   $checkbox=$_POST['checkbox'];
-    $signature=$_POST['signaturespace'];
-    if(empty($signature)){
-        die("The signature isnt present");
+if(isset($event)){
+    if($_SERVER['REQUEST_METHOD']=='POST'){
+        $firstName=$_POST['fname'];
+        $lastName=$_POST['lastname'];
+        $email=$_POST['email'];
+       $checkbox=$_POST['checkbox'];
+        $signature=$_POST['signaturespace'];
+        if(empty($signature)){
+            die("The signature isnt present");
+        }
+        $base64_signimage=base64_encode($signature);
+      $idsql="SELECT event_id FROM event  where event_name='$event'";
+      $sqlresult=pg_query($connect,$idsql);
+      if (pg_num_rows($sqlresult)>0) {
+        $account=pg_fetch_assoc($sqlresult);
+        $eventID= $account['event_id'];
+      }
+    
+        $sql= "INSERT INTO participants (first_name,last_name,email,check_field,signature,event_type) 
+        VALUES ('$firstName','$lastName','$email','$checkbox','$base64_signimage',$eventID)";
+        $result= pg_query($connect,$sql);
+        if ($result) {
+            echo"THANK YOU FOR SIGNING THE FORM";
+           unset($_SESSION['signature']);
+            header("location:home.php");
+        }
+        else {
+            die(pg_last_error($connect));
+        }
+    
+    
     }
-    $base64_signimage=base64_encode($signature);
-  $idsql="SELECT event_id FROM event  where event_name='$event'";
-  $sqlresult=pg_query($connect,$idsql);
-  if (pg_num_rows($sqlresult)>0) {
-    $account=pg_fetch_assoc($sqlresult);
-    $eventID= $account['event_id'];
-  }
-
-    $sql= "INSERT INTO participants (first_name,last_name,email,check_field,signature,event_type) 
-    VALUES ('$firstName','$lastName','$email','$checkbox','$base64_signimage',$eventID)";
-    $result= pg_query($connect,$sql);
-    if ($result) {
-        echo"THANK YOU FOR SIGNING THE FORM";
-       unset($_SESSION['signature']);
-        header("location:home.php");
+    else{
+        echo"";
     }
-    else {
-        die(pg_last_error($connect));
-    }
-
-
 }
 else{
-    echo"";
+    header("location:404.html");
 }
+
 
 ?>
 <!DOCTYPE html>

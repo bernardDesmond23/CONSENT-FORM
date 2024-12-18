@@ -1,7 +1,3 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,43 +28,38 @@
     <br>
     <table>
         <tr>
-       
+        
             <td>Event</td>
-            <td>Date</td>
-            <td>Location</td>
-            <td>Status</td>
            
+            <td> Conset Form</td>
+            <td>Submit</td>
             
         </tr>
         <?php
 include "connectDB.php";
 session_start();
-$user=$_SESSION['user_id'];
+$event=$_SESSION['event_name'];
 
 
-$idsql="SELECT event_name,date,location, status from event where creator_id='$user'";
-$sqlresult=pg_query($connect,$idsql);
-if ($sqlresult) {
-    while($account=pg_fetch_assoc($sqlresult)){
-        $event= $account['event_name'];
-        $e_date=$account['date'];
-        $event_location=$account['location'];
-        $status=$account['status'];
+
+if ($event) {
+   
         
         echo"
          <tr>
                
                     <td>$event</td>
-                    <td>$e_date</td>
-                    <td>$event_location</td>
-                    <td>$status</td>
-                   
+                    
+                    <td><button><a href='conset.php'>VIEW</a></button></td>
+                    <td> <button><a href='submit.php'>SUBMIT</a></button></td>
                 </tr>
         ";
     }
-  
+  else {
+    "CAN`T DISPLAY EVENT CREATED";
+  }
  
-}
+
 
         ?>
     </table>
