@@ -392,6 +392,7 @@ simFla.ux.plugins.signaturePad = Ext.extend(Ext.util.Observable, {
 
     // Get the image data as a PNG
     var imgData = oCanvas.toDataURL("image/png");
+
 	
 	console.log("Sending image data:", imgData); 
     // Use fetch to send the image data to the PHP file

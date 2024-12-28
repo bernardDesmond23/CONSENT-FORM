@@ -14,7 +14,7 @@ if(isset($event)){
         if(empty($signature)){
             die("The signature isnt present");
         }
-        $base64_signimage=base64_encode($signature);
+        //$base64_signimage=base64_decode($signature);
       $idsql="SELECT event_id FROM event  where event_name='$event'";
       $sqlresult=pg_query($connect,$idsql);
       if (pg_num_rows($sqlresult)>0) {
@@ -23,7 +23,7 @@ if(isset($event)){
       }
     
         $sql= "INSERT INTO participants (first_name,last_name,email,check_field,signature,event_type) 
-        VALUES ('$firstName','$lastName','$email','$checkbox','$base64_signimage',$eventID)";
+        VALUES ('$firstName','$lastName','$email','$checkbox','$signature',$eventID)";
         $result= pg_query($connect,$sql);
         if ($result) {
             echo"THANK YOU FOR SIGNING THE FORM";
